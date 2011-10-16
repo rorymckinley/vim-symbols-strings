@@ -1,11 +1,11 @@
 function! SymboliseStrings(type)
   let boundaries = GetBoundaries(a:type)
-  silent exec boundaries['line_begin'].','.boundaries['line_end'].'s/"\(\w\+\)"/:\1/g'
+  exec boundaries['line_begin'].','.boundaries['line_end'].'s/"\(\w\+\)"/:\1/ge'
 endfunction
 
 function! StringifySymbols(type)
   let boundaries = GetBoundaries(a:type)
-  silent exec boundaries['line_begin'].','.boundaries['line_end'].'s/:\(\w\+\)/"\1"/g'
+  exec boundaries['line_begin'].','.boundaries['line_end'].'s/:\(\w\+\)/"\1"/ge'
 endfunction
 
 function! GetBoundaries(type)
