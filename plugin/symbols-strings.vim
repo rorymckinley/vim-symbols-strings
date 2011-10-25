@@ -5,20 +5,19 @@ let s:stringify_finder = ':\(\w\+\)'
 let s:stringify_replace = '"\1"'
 
 function! SymboliseStrings(type)
+  let l:cursor_coords = getpos('.')
   call LoadContentToReplace(a:type)
-  echom @@
-  let &paste=1
-  let l:new_content = substitute(@@, s:symbolise_finder, s:symbolise_replace, 'ge')
-  exec "normal! a" . l:new_content . "\<Esc>"
-  let &paste=0
+  let l:paste_command = GetPasteCommand(a:type)
+  let @@ = substitute(@@, s:symbolise_finder, s:symbolise_replace, 'ge')
+  exec "normal! " . l:paste_command
 endfunction
 
 function! StringifySymbols(type)
+  let l:cursor_coords = getpos('.')
   call LoadContentToReplace(a:type)
-  let &paste=1
-  let l:new_content = substitute(@@, s:stringify_finder, s:stringify_replace, 'ge')
-  exec "normal! a" . l:new_content . "\<Esc>"
-  let &paste=0
+  let l:paste_command = GetPasteCommand(a:type)
+  let @@ = substitute(@@, s:stringify_finder, s:stringify_replace, 'ge')
+  exec "normal! " . l:paste_command
 endfunction
 
 function! GetBoundaries(type)
@@ -29,7 +28,15 @@ function! LoadContentToReplace(type)
   if a:type == "line"
     silent exe "normal! '[V']d"
   elseif a:type == "char"
-    silent exe "normal! `[v`]d"
+    silent exe "normal! `[v`]c"
+  endif
+endfunction
+
+function! GetPasteCommand(type)
+  if a:type == "line"
+    return "P"
+  elseif a:type == "char"
+    return "p"
   endif
 endfunction
 
