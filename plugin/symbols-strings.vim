@@ -1,3 +1,7 @@
+if !exists('g:symbolise_strings_map_keys')
+  let g:symbolise_strings_map_keys = 1
+endif
+
 let s:symbolise_finder = '[''"]\(\w\+\)[''"]'
 let s:symbolise_replace = ':\1'
 
@@ -48,7 +52,9 @@ function! StringifySymbolsThisLine()
   .s/:\(\w\+\)/"\1"/g
 endfunction
 
-nnoremap <silent> <Leader>l :set opfunc=SymboliseStrings<CR>g@
-nnoremap <silent> <Leader>g :set opfunc=StringifySymbols<CR>g@
-nnoremap <silent> <Leader>gc :call StringifySymbolsThisLine()<CR>
-nnoremap <silent> <Leader>lc :call SymboliseStringsThisLine()<CR>
+if g:symbolise_strings_map_keys
+  nnoremap <silent> <Leader>l :set opfunc=SymboliseStrings<CR>g@
+  nnoremap <silent> <Leader>g :set opfunc=StringifySymbols<CR>g@
+  nnoremap <silent> <Leader>gc :call StringifySymbolsThisLine()<CR>
+  nnoremap <silent> <Leader>lc :call SymboliseStringsThisLine()<CR>
+endif
