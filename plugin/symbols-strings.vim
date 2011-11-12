@@ -1,4 +1,4 @@
-let s:symbolise_finder = '"\(\w\+\)"'
+let s:symbolise_finder = '[''"]\(\w\+\)[''"]'
 let s:symbolise_replace = ':\1'
 
 let s:stringify_finder = ':\(\w\+\)'
