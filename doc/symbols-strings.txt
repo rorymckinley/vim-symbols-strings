@@ -1,0 +1,75 @@
+symbols-strings.txt  For Vim  version 7.3  Last change: 12 November 2011
+                                                      *symbols-strings*
+Symbols-Strings~
+
+This is a fairly naive implementation of a plugin that can convert Ruby 
+symbols to strings and vice versa. A single line can be converted or 
+the commands can be used as an operator with vim motion commands.
+
+Usage~
+
+By default, symbols-strings offers four commands: two that serve as 
+operators and can be combined with vim motion commands, and two that 
+only operate on the current line.
+
+<Leader>g{motion} Convert all symbols in the range to strings
+<Leader>l{motion} Convert all strings in the range to symbols
+
+<Leader>gg Convert all symbols in the current line to strings
+<Leader>ll Convert all strings in the current line to symbols 
+
+Overriding mappings~
+
+Adding the following variable to your .vimrc will disable the default 
+key mappings:
+
+let g:symbolise_strings_map_keys = 0
+
+You can then define your own mappings for the two operator functions:
+
+  nnoremap <silent> <Leader>l :set opfunc=symbolsstrings#SymboliseStrings<CR>g@
+  nnoremap <silent> <Leader>g :set opfunc=symbolsstrings#StringifySymbols<CR>g@
+
+As well as for the two linewise functions:
+
+  nnoremap <silent> <Leader>gg :call symbolsstrings#StringifySymbolsThisLine()<CR>
+  nnoremap <silent> <Leader>ll :call symbolsstrings#SymboliseStringsThisLine()<CR>
+
+Caveats~
+
+The regular expression that does the replacing currently only considers strings or
+symbols containing [a-zA-Z0-9_]. This is sufficient for my everyday needs - but can
+be extended.
+
+There is currently no mapping for use with visual mode. This is really an artifact of
+my personal workflow and I would be willing to add this behaviour if anybody shows an 
+interest in it.
+
+Contact~
+
+Rory McKinley (rorymckinley at gmail dot com)
+
+License~
+
+symbols-strings is licensed under the MIT license
+
+Copyright (C) 2011 by Rory McKinley
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+vim:tw=72ft=help
