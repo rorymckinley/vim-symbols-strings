@@ -9,23 +9,25 @@ let s:stringify_finder = ':\(\w\+\)'
 let s:stringify_replace = '"\1"'
 
 function! SymboliseStrings(type)
-  let l:cursor_coords = getpos('.')
+  call MemoriseStart()
+
   call LoadContentToReplace(a:type)
   let l:paste_command = GetPasteCommand(a:type)
   let @@ = substitute(@@, s:symbolise_finder, s:symbolise_replace, 'ge')
+
   exec "normal! " . l:paste_command
+  call ReturnToStart()
 endfunction
 
 function! StringifySymbols(type)
-  let l:cursor_coords = getpos('.')
+  call MemoriseStart()
+
   call LoadContentToReplace(a:type)
   let l:paste_command = GetPasteCommand(a:type)
   let @@ = substitute(@@, s:stringify_finder, s:stringify_replace, 'ge')
-  exec "normal! " . l:paste_command
-endfunction
 
-function! GetBoundaries(type)
-  return { 'line_begin': line("'["), 'line_end': line("']")}
+  exec "normal! " . l:paste_command
+  call ReturnToStart()
 endfunction
 
 function! LoadContentToReplace(type)
@@ -50,6 +52,16 @@ endfunction
 
 function! StringifySymbolsThisLine()
   .s/:\(\w\+\)/"\1"/g
+endfunction
+
+function! MemoriseStart()
+  let s:cursor_coords = getpos('.')
+  let s:contents_of_register = @@
+endfunction
+
+function! ReturnToStart()
+  let @@ = s:contents_of_register
+  let l:results = setpos('.', s:cursor_coords)
 endfunction
 
 if g:symbolise_strings_map_keys
