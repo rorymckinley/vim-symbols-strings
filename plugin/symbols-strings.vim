@@ -40,5 +40,15 @@ function! GetPasteCommand(type)
   endif
 endfunction
 
+function! SymboliseStringsThisLine()
+  .s/['"]\(\w\+\)['"]/:\1/g
+endfunction
+
+function! StringifySymbolsThisLine()
+  .s/:\(\w\+\)/"\1"/g
+endfunction
+
 nnoremap <silent> <Leader>l :set opfunc=SymboliseStrings<CR>g@
 nnoremap <silent> <Leader>g :set opfunc=StringifySymbols<CR>g@
+nnoremap <silent> <Leader>gc :call StringifySymbolsThisLine()<CR>
+nnoremap <silent> <Leader>lc :call SymboliseStringsThisLine()<CR>
