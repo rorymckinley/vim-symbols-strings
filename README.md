@@ -8,8 +8,8 @@ vim-symbols-strings is a plugin that converts Ruby symbols to strings and vice v
 
 For now, the commands are frozen as follows:
 
-* <Leader>g<movement modifiers> to convert symbols to strings - e.g. <Leader>gi( will convert all symbols inside parenthesis to strings
-* <Leader>l<movement modifiers> to convert strings to symbols - e.g. <Leader>li( will convert all symbols inside parenthesis to strings
+* `<Leader>g<movement modifiers>` to convert symbols to strings - e.g. `<Leader>gi(` will convert all symbols inside parenthesis to strings
+* `<Leader>l<movement modifiers>` to convert strings to symbols - e.g. `<Leader>li(` will convert all strings inside parenthesis to symbols
 
 ## Caveat Emptor
 
